@@ -1,0 +1,8 @@
+div.lens {
+    background-color: #8bf;
+    height: 20px;
+    width: 20px;
+}
+div.lens.focus {
+    background-color: #06f;
+}
