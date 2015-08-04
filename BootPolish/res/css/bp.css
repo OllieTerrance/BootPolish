@@ -6,3 +6,10 @@ div.lens {
 div.lens.focus {
     background-color: #06f;
 }
+form {
+	border: 1px dashed #f88;
+}
+form::before {
+	color: #f22;
+	content: "FORM";
+}

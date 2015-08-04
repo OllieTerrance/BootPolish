@@ -46,6 +46,32 @@ $(document).ready(function(e) {
         if (!para) return;
         $(".lens.focus").before($("<div>").addClass("lens")).before($("<p>").toggleClass("lead", key === "shift+p").html(para));
         $lenses = $(".lens");
+    }).bind("a", function(e, key) {
+        var level = prompt("Alert level (success/info/warning/danger):", "");
+        if (level === null || ["success", "info", "warning", "danger"].indexOf(level) === -1) return;
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<div>").addClass("alert alert-" + level).append($("<div>").addClass("lens focus"))).removeClass("focus");
+        $lenses = $(".lens");
+    }).bind("d", function(e, key) {
+        var label = prompt("Button label:", "");
+        if (label === null) return;
+        var opts = [];
+        while (true) {
+            var opt = prompt("Add option ('--' for separator, prefix '@' for heading, blank to end):", "");
+            if (opt === null) return;
+            if (opt === "") break;
+            if (opt === "--") {
+                opts.push($("<li>").addClass("divider").attr("role", "separator"));
+            } else if (opt[0] === "@") {
+                opts.push($("<li>").addClass("dropdown-header").text(opt.substr(1)));
+            } else {
+                opts.push($("<li>").append($("<a>").text(opt)));
+            }
+        }
+        var $dropdown = $("<ul>").addClass("dropdown-menu").append(opts);
+        var $button = $("<button>").addClass("btn btn-default dropdown-toggle").attr("data-toggle", "dropdown").text(label + " ").append($("<span>").addClass("caret"));
+        var $root = $("<div>").addClass("dropdown").append($button).append($dropdown);
+        $(".lens.focus").before($("<div>").addClass("lens")).before($root);
+        $lenses = $(".lens");
     }).bind("t", function(e, key) {
         var rows = parseInt(prompt("Rows:", ""));
         if (!rows || rows < 0) return;
@@ -75,6 +101,32 @@ $(document).ready(function(e) {
         }
         $table.append($tbody);
         $(".lens.focus").before($("<div>").addClass("lens")).before($table);
+        $lenses = $(".lens");
+    }).bind("f f", function(e, key) {
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<form>").append($("<div>").addClass("lens focus"))).removeClass("focus");
+        $lenses = $(".lens");
+    }).bind(["f i", "f e", "f n", "f p"], function(e, key) {
+        var placeholder = prompt("Placeholder:", "");
+        if (placeholder === null) return;
+        var type = (key === "f i" ? "text" : (key === "f e" ? "email" : (key === "f n" ? "number" : "password")));
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<input>").attr("type", type).attr("placeholder", placeholder || undefined).addClass("form-control"));
+        $lenses = $(".lens");
+    }).bind("f d", function(e, key) {
+        var opts = [];
+        while (true) {
+            var opt = prompt("Add option (blank to end):", "");
+            if (opt === null) return;
+            if (opt === "") break;
+            opts.push(opt);
+        }
+        var $select = $("<select>").addClass("form-control");
+        for (var i in opts) {
+            $select.append($("<option>").text(opts[i]));
+        }
+        $(".lens.focus").before($("<div>").addClass("lens")).before($select);
+        $lenses = $(".lens");
+    }).bind("f s", function(e, key) {
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<input>").attr("type", "submit").addClass("btn btn-primary").text("Submit"));
         $lenses = $(".lens");
     });
 });
