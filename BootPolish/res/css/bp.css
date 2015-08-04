@@ -1,5 +1,6 @@
 div.lens {
     background-color: #8bf;
+    display: inline-block;
     height: 20px;
     width: 20px;
 }
