@@ -42,6 +42,9 @@ $(document).ready(function(e) {
         if (!header) return;
         $(".lens.focus").before($("<div>").addClass("lens")).before($("<div>").addClass("page-header").append($("<h1>").html(header)));
         $lenses = $(".lens");
+    }).bind("j", function(e, key) {
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<div>").addClass("jumbotron").append($("<div>").addClass("lens focus"))).removeClass("focus");
+        $lenses = $(".lens");
     }).bind(["1", "2", "3", "4", "5", "6"], function(e, key) {
         var title = prompt("Title (level " + key + "):", "");
         if (!title) return;
@@ -55,9 +58,12 @@ $(document).ready(function(e) {
     }).bind("a", function(e, key) {
         var colour = prompt("Alert colour (success/info/warning/danger):", "info");
         if (["success", "info", "warning", "danger"].indexOf(colour) === -1) return;
-        $(".lens.focus").before($("<div>").addClass("lens")).before($("<div>").addClass("alert alert-" + colour).append($("<div>").addClass("lens focus"))).removeClass("focus");
+        var dismissable = confirm("Dismissable?");
+        var $alert = $("<div>").addClass("alert alert-" + colour);
+        if (dismissable) $alert.addClass("alert-dismissable").append($("<button>").addClass("close").attr("type", "button").attr("data-dismiss", "alert").append($("<span>").html("&times;")));
+        $(".lens.focus").before($("<div>").addClass("lens")).before($alert.append($("<div>").addClass("lens focus"))).removeClass("focus");
         $lenses = $(".lens");
-    }).bind(["w", "shift+w", "shift+alt+w"], function(e, key) {
+    }).bind(["w", "shift+w", "alt+w"], function(e, key) {
         var size = (key === "w" ? "" : (key === "shift+w" ? " well-lg" : " well-sm"));
         $(".lens.focus").before($("<div>").addClass("lens")).before($("<div>").addClass("well" + size).append($("<div>").addClass("lens focus"))).removeClass("focus");
         $lenses = $(".lens");
@@ -76,6 +82,14 @@ $(document).ready(function(e) {
         $panel.append($("<div>").addClass("panel-body").append($("<div>").addClass("lens focus")));
         if (footer) $panel.append($("<div>").addClass("panel-footer").append($("<div>").addClass("lens")));
         $(".lens.focus").before($("<div>").addClass("lens")).before($panel).removeClass("focus");
+        $lenses = $(".lens");
+    }).bind(["b", "shift+b", "alt+b", "shift+alt+b"], function(e, key) {
+        var label = prompt("Button label:", "");
+        if (!label) return;
+        var colour = prompt("Button colour (default/primary/success/info/warning/danger):", "default");
+        if (["default", "primary", "success", "info", "warning", "danger"].indexOf(colour) === -1) return;
+        var size = (key === "b" ? "" : (key === "shift+b" ? " btn-lg" : (key === "alt+b" ? " btn-sm" : " btn-xs")));
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<button>").addClass("btn" + size + " btn-" + colour).text(label));
         $lenses = $(".lens");
     }).bind(["d", "shift+d"], function(e, key) {
         var label = prompt("Button label:", "");
