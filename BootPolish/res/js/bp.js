@@ -14,7 +14,7 @@ $(document).ready(function(e) {
                 break;
         }
     }
-    addLens("#bp-root", 0);
+    $("#bp-root").append($("<div>").addClass("lens"));
     $lenses = $(".lens");
     $lenses.first().addClass("focus");
     Mousetrap.bind(["left", "right"], function(e, key) {
@@ -25,30 +25,26 @@ $(document).ready(function(e) {
     }).bind("\\", function(e, key) {
         $lenses.show();
     }, "keyup").bind("backspace", function(e, key) {
-        var pos = $lenses.index($(".lens.focus"));
-        if (pos === 0) return;
-        var $all = $("#bp-root *");
-        var start = $all.index($lenses.get(pos - 1));
-        var end = $all.index($lenses.get(pos));
-        $all.slice(start, end).remove();
+        $(".lens.focus").prevUntil(".lens").prev().andSelf().remove();
+        $lenses = $(".lens");
+    }).bind("shift+backspace", function(e, key) {
+        if (!confirm("Clear all sibling nodes?")) return;
+        var parent = $(".lens.focus").parent().empty().append($("<div>").addClass("lens focus"));
+        $lenses = $(".lens");
+    }).bind("enter", function(e, key) {
+        var text = prompt("Raw text:", "");
+        if (!text) return;
+        $(".lens.focus").before($("<div>").addClass("lens")).before(text);
         $lenses = $(".lens");
     }).bind(["1", "2", "3", "4", "5", "6"], function(e, key) {
         var title = prompt("Title (level " + key + "):", "");
         if (!title) return;
-        addLens(".lens.focus", -1);
-        $("<h" + key + ">").html(title).insertBefore(".lens.focus");
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<h" + key + ">").html(title));
         $lenses = $(".lens");
     }).bind(["p", "shift+p"], function(e, key) {
         var para = prompt((key === "p" ? "P" : "Lead p") + "aragraph:", "");
         if (!para) return;
-        addLens(".lens.focus", -1);
-        $("<p>").toggleClass("lead", key === "shift+p").html(para).insertBefore(".lens.focus");
-        $lenses = $(".lens");
-    }).bind("x", function(e, key) {
-        var text = prompt("Plain text:", "");
-        if (!text) return;
-        addLens(".lens.focus", -1);
-        $(".lens.focus").before(text);
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<p>").toggleClass("lead", key === "shift+p").html(para));
         $lenses = $(".lens");
     }).bind("t", function(e, key) {
         var rows = parseInt(prompt("Rows:", ""));
@@ -61,7 +57,7 @@ $(document).ready(function(e) {
             $row = $("<tr>");
             for (var j = 0; j < cols; j++) {
                 var $cell = $("<th>");
-                addLens($cell, 0);
+                $cell.append($("<div>").addClass("lens"));
                 $row.append($cell);
             }
             $table.append($("<thead>").append($row));
@@ -72,15 +68,13 @@ $(document).ready(function(e) {
             var $row = $("<tr>");
             for (var j = 0; j < cols; j++) {
                 var $cell = $("<td>");
-                addLens($cell, 0);
+                $cell.append($("<div>").addClass("lens"));
                 $row.append($cell);
             }
             $tbody.append($row);
         }
         $table.append($tbody);
-        addLens(".lens.focus", -1);
-        $table.insertBefore(".lens.focus");
+        $(".lens.focus").before($("<div>").addClass("lens")).before($table);
         $lenses = $(".lens");
-        console.log($lenses.length);
     });
 });
