@@ -80,20 +80,23 @@ $(document).ready(function(e) {
         if (footer) $panel.append($("<div>").addClass("panel-footer").append($("<div>").addClass("lens")));
         $(".lens.focus").before($("<div>").addClass("lens")).before($panel).removeClass("focus");
         scanLenses();
-    }).bind(["b", "shift+b", "alt+b", "shift+alt+b"], function(e, key) {
+    }).bind("b b", function(e, key) {
         var label = prompt("Button label:", "");
         if (!label) return;
+        var size = prompt("Button size (lg/sm/xs, blank for normal):", "");
+        if (["lg", "sm", "xs", ""].indexOf(size) === -1) return;
         var colour = prompt("Button colour (default/primary/success/info/warning/danger):", "default");
         if (["default", "primary", "success", "info", "warning", "danger"].indexOf(colour) === -1) return;
-        var size = (key === "b" ? "" : (key === "shift+b" ? " btn-lg" : (key === "alt+b" ? " btn-sm" : " btn-xs")));
-        $(".lens.focus").before($("<div>").addClass("lens")).before($("<button>").addClass("btn" + size + " btn-" + colour).text(label));
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<button>").addClass("btn" + (size ? " btn-" + size : "") + " btn-" + colour).text(label));
         scanLenses();
-    }).bind(["d", "shift+d"], function(e, key) {
+    }).bind(["b d", "b shift+d"], function(e, key) {
         var label = prompt("Button label:", "");
         if (label === null) return;
+        var size = prompt("Button size (lg/sm/xs, blank for normal):", "");
+        if (["lg", "sm", "xs", ""].indexOf(size) === -1) return;
         var colour = prompt("Button colour (default/primary/success/info/warning/danger):", "default");
         if (["default", "primary", "success", "info", "warning", "danger"].indexOf(colour) === -1) return;
-        var up = (key === "shift+d");
+        var up = (key === "b shift+d");
         var opts = [];
         while (true) {
             var opt = prompt("Add option ('--' for separator, prefix '!' for heading, blank to end):", "");
@@ -108,7 +111,7 @@ $(document).ready(function(e) {
             }
         }
         var $dropdown = $("<ul>").addClass("dropdown-menu").append(opts);
-        var $button = $("<button>").addClass("btn btn-" + colour + " dropdown-toggle").attr("data-toggle", "dropdown").text(label + " ").append($("<span>").addClass("caret"));
+        var $button = $("<button>").addClass("btn" + (size ? " btn-" + size : "") + " btn-" + colour + " dropdown-toggle").attr("data-toggle", "dropdown").text(label + " ").append($("<span>").addClass("caret"));
         var $root = $("<div>").addClass("drop" + (up ? "up" : "down")).append($button).append($dropdown);
         $(".lens.focus").before($("<div>").addClass("lens")).before($root);
         scanLenses();
@@ -165,8 +168,15 @@ $(document).ready(function(e) {
         }
         $(".lens.focus").before($("<div>").addClass("lens")).before($select);
         scanLenses();
+    }).bind("f l", function(e, key) {
+        var label = prompt("Label:", "");
+        if (!label) return;
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<label>").text(label));
+        scanLenses();
     }).bind("f s", function(e, key) {
-        $(".lens.focus").before($("<div>").addClass("lens")).before($("<input>").attr("type", "submit").addClass("btn btn-primary").text("Submit"));
+        var label = prompt("Submit label:", "Submit");
+        if (!label) return;
+        $(".lens.focus").before($("<div>").addClass("lens")).before($("<input>").attr("type", "submit").addClass("btn btn-primary").val(label));
         scanLenses();
     });
 });

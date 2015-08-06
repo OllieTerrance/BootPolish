@@ -16,8 +16,9 @@
 * `a`: insert alert
 * `w`: insert well (`shift+w` for large, `alt+w` for small)
 * `l`: insert panel
-* `b`: insert button (`shift+w` for large, `alt+w` for small, `shift+alt+w` for extra-small)
-* `d`: insert button dropdown (`shift+d` for dropup)
+* `b`: buttons...
+  - `b b`: insert button
+  - `b d`: insert button dropdown (`shift+d` for dropup)
 * `t`: insert table
 * `f`: forms...
   - `f f`: insert form
@@ -28,4 +29,5 @@
   - `f c`: insert checkboxes
   - `f r`: insert radios
   - `f d`: insert dropdown/select
-  - `f s`: insert button
+  - `f l`: insert label
+  - `f s`: insert submit button
