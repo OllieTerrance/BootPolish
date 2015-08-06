@@ -13,9 +13,9 @@ $(document).ready(function(e) {
         var pos = $lenses.index($(".lens.focus").removeClass("focus"));
         $($lenses.get((pos + (key === "left" ? -1 : 1)) % $lenses.length)).addClass("focus");
     }).bind("\\", function(e, key) {
-        $lenses.hide();
+        $("#bp-root").removeClass("edit");
     }).bind("\\", function(e, key) {
-        $lenses.show();
+        $("#bp-root").addClass("edit");
     }, "keyup").bind("backspace", function(e, key) {
         e.preventDefault();
         if ($(".lens.focus").prev().is(".lens")) {

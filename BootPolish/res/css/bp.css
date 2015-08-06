@@ -1,16 +1,19 @@
-div.lens {
-    background-color: #8bf;
+#bp-root.edit div.lens {
     display: inline-block;
-    height: 20px;
-    width: 20px;
+    height: 10px;
+    width: 10px;
+    background-color: #8bf;
 }
-div.lens.focus {
+#bp-root.edit div.lens.focus {
     background-color: #06f;
 }
-form {
-	border: 1px dashed #f88;
+#bp-root.edit form {
+    border: 1px dashed #f88;
 }
-form::before {
-	color: #f22;
-	content: "FORM";
+#bp-root.edit form::before {
+    float: right;
+    content: "Form";
+    border-bottom: 1px dashed #f88;
+    border-left: 1px dashed #f88;
+    color: #f22;
 }
