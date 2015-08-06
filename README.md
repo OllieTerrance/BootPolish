@@ -9,16 +9,15 @@
 * `backspace`: delete element before lens
 * `shift+backspace`: delete all siblings
 * `enter`: insert raw text/HTML
-* `h`: insert page header
 * `j`: insert jumbotron
-* `1`, `2`, `3`, `4`, `5`, `6`: insert heading
-* `p`: insert paragraph (`shift+p` for lead)
+* `1`, `2`, `3`, `4`, `5`, `6`: insert heading (`shift` for block heading)
+* `p`: insert paragraph (`shift` for lead)
 * `a`: insert alert
-* `w`: insert well (`shift+w` for large, `alt+w` for small)
+* `w`: insert well
 * `l`: insert panel
 * `b`: buttons...
   - `b b`: insert button
-  - `b d`: insert button dropdown (`shift+d` for dropup)
+  - `b d`: insert button dropdown (`shift` for dropup)
 * `t`: insert table
 * `f`: forms...
   - `f f`: insert form
