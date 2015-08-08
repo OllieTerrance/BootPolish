@@ -1,19 +1,29 @@
-#bp-root.edit div.lens {
+.bp-edit div.lens {
     display: inline-block;
     height: 10px;
     width: 10px;
     background-color: #8bf;
 }
-#bp-root.edit div.lens.focus {
+.bp-edit div.lens.focus {
     background-color: #06f;
 }
-#bp-root.edit form {
+.bp-edit form {
     border: 1px dashed #f88;
 }
-#bp-root.edit form::before {
+.bp-edit form::before {
     float: right;
     content: "Form";
     border-bottom: 1px dashed #f88;
     border-left: 1px dashed #f88;
-    color: #f22;
+    color: #f88;
+}
+.bp-edit .form-group {
+    border: 1px dashed #fb4;
+}
+.bp-edit .form-group::before {
+    float: right;
+    content: "Form Group";
+    border-bottom: 1px dashed #fb4;
+    border-left: 1px dashed #fb4;
+    color: #fb4;
 }
