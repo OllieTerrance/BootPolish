@@ -48,17 +48,17 @@ $.extend(BootPolish.prototype, {
         }
         this.syncLenses();
     },
-    createHeading: function(text, block, size) {
+    createHeading: function(text, size, block) {
         var $title = $("<h" + size + ">").html(text);
         this.insert(block ? $("<div>").addClass("page-header").append($title) : $title);
     },
     createParagraph: function(text, lead) {
-        this.insert($("<p>").toggleClass("lead", lead).html(text));
+        this.insert($("<p>").toggleClass("lead", !!lead).html(text));
     },
     createJumbotron: function() {
         this.insert($("<div>").addClass("jumbotron").append(this.newLens()));
     },
-    createAlert: function(dismissable, colour) {
+    createAlert: function(colour, dismissable) {
         var $alert = $("<div>").addClass("alert alert-" + colour);
         if (dismissable) {
             $alert.addClass("alert-dismissable")

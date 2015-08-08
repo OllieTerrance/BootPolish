@@ -23,9 +23,9 @@ $(document).ready(function(e) {
         var block = (parts.length === 2);
         if (block) parts.shift();
         var size = parts[0];
-        var text = prompt("Title (level " + size + "):", "");
+        var text = prompt((block ? "Block t" : "T") + "itle (level " + size + "):", "");
         if (!text) return;
-        bp.createHeading(text, block, size);
+        bp.createHeading(text, size, block);
     }).bind(["p", "shift+p"], function(e, key) {
         var text = prompt((key === "p" ? "P" : "Lead p") + "aragraph:", "");
         if (!text) return;
@@ -34,7 +34,7 @@ $(document).ready(function(e) {
         var colour = prompt("Alert colour (success/info/warning/danger):", "info");
         if (["success", "info", "warning", "danger"].indexOf(colour) === -1) return;
         var dismissable = confirm("Dismissable?");
-        bp.createAlert(dismissable, colour);
+        bp.createAlert(colour, dismissable);
     }).bind(["w", "shift+w", "alt+w"], function(e, key) {
         var size = prompt("Well size (lg/sm, blank for normal):", "");
         if (["lg", "sm", ""].indexOf(size) === -1) return;
