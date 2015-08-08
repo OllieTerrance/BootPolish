@@ -1,6 +1,6 @@
 "use strict";
 $(document).ready(function(e) {
-    window.bp = new BootPolish("#bp-root");
+    window.bp = new BootPolish("#bp-root", true);
     Mousetrap.bind(["left", "right"], function(e, key) {
         bp.nav(key === "left" ? -1 : 1);
     }).bind("\\", function(e, key) {
@@ -76,8 +76,7 @@ $(document).ready(function(e) {
         if (!rows || rows < 0) return;
         var cols = parseInt(prompt("Columns:", ""));
         if (!cols || cols < 0) return;
-        var header = rows > 1 && confirm("First row as header?");
-        bp.createTable(rows, cols, header);
+        bp.createTable(rows, cols, (rows > 1 && confirm("First row as header?")));
     }).bind("f f", function(e, key) {
         bp.createForm(confirm("Horizontal?"));
     }).bind("f g", function(e, key) {

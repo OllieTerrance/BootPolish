@@ -1,6 +1,6 @@
 "use strict";
-var BootPolish = function(root) {
-    this.$root = $(root).addClass("bp-edit");
+var BootPolish = function(root, visible) {
+    this.$root = $(root).toggleClass("bp-edit", !!visible);
     this.$root.append(this.newLens(true));
     this.syncLenses();
 };
@@ -15,16 +15,19 @@ $.extend(BootPolish.prototype, {
     },
     syncLenses: function() {
         this.$lenses = $(".lens", this.$root);
+        return this;
     },
     focus: function() {
         return $(".lens.focus", this.$root);
     },
     showEdit: function(show) {
         this.$root.toggleClass("bp-edit", show);
+        return this;
     },
     nav: function(fwd) {
         var pos = this.$lenses.index(this.focus().removeClass("focus"));
         $(this.$lenses.get((pos + fwd) % this.$lenses.length)).addClass("focus");
+        return this;
     },
     del: function() {
         var $focus = this.focus();
@@ -34,11 +37,11 @@ $.extend(BootPolish.prototype, {
         } else {
             $focus.prevUntil(".lens").prev().andSelf().remove();
         }
-        this.syncLenses();
+        return this.syncLenses();
     },
     delSiblings: function() {
         this.focus().parent().empty().append(this.newLens(true));
-        this.syncLenses();
+        return this.syncLenses();
     },
     insert: function(obj) {
         this.focus().before(this.newLens()).before(obj);
@@ -46,17 +49,17 @@ $.extend(BootPolish.prototype, {
             this.focus().removeClass("focus");
             $(".lens", obj).first().addClass("focus");
         }
-        this.syncLenses();
+        return this.syncLenses();
     },
     createHeading: function(text, size, block) {
         var $title = $("<h" + size + ">").html(text);
-        this.insert(block ? $("<div>").addClass("page-header").append($title) : $title);
+        return this.insert(block ? $("<div>").addClass("page-header").append($title) : $title);
     },
     createParagraph: function(text, lead) {
-        this.insert($("<p>").toggleClass("lead", !!lead).html(text));
+        return this.insert($("<p>").toggleClass("lead", !!lead).html(text));
     },
     createJumbotron: function() {
-        this.insert($("<div>").addClass("jumbotron").append(this.newLens()));
+        return this.insert($("<div>").addClass("jumbotron").append(this.newLens()));
     },
     createAlert: function(colour, dismissable) {
         var $alert = $("<div>").addClass("alert alert-" + colour);
@@ -65,7 +68,7 @@ $.extend(BootPolish.prototype, {
                 .append($("<button>").addClass("close").attr("type", "button").attr("data-dismiss", "alert")
                     .append($("<span>").html("&times;")));
         }
-        this.insert($alert.append(this.newLens()));
+        return this.insert($alert.append(this.newLens()));
     },
     createPanel: function(title, asHeading, footer, colour) {
         var $panel = $("<div>").addClass("panel panel-" + colour);
@@ -76,19 +79,19 @@ $.extend(BootPolish.prototype, {
         }
         $panel.append($("<div>").addClass("panel-body").append(this.newLens()));
         if (footer) $panel.append($("<div>").addClass("panel-footer").append(this.newLens()));
-        this.insert($panel);
+        return this.insert($panel);
     },
     createWell: function(size) {
-        this.insert($("<div>").addClass("well" + (size ? " well-" + size : "")).append(this.newLens()));
+        return this.insert($("<div>").addClass("well" + (size ? " well-" + size : "")).append(this.newLens()));
     },
     createButton: function(label, colour, size, dropdown) {
         if (dropdown) {
             var $menu = $("<ul>").addClass("dropdown-menu").append(dropdown.elements);
             var $button = $("<button>").addClass("btn" + (size ? " btn-" + size : "") + " btn-" + colour + " dropdown-toggle").attr("data-toggle", "dropdown")
                     .text(label + " ").append($("<span>").addClass("caret"));
-            this.insert($("<div>").addClass("drop" + dropdown.direction).append($button).append($menu));
+            return this.insert($("<div>").addClass("drop" + dropdown.direction).append($button).append($menu));
         } else {
-            this.insert($("<button>").addClass("btn" + (size ? " btn-" + size : "") + " btn-" + colour).text(label));
+            return this.insert($("<button>").addClass("btn" + (size ? " btn-" + size : "") + " btn-" + colour).text(label));
         }
     },
     createTable: function(rows, cols, asHeader) {
@@ -113,25 +116,25 @@ $.extend(BootPolish.prototype, {
             }
             $tbody.append($row);
         }
-        this.insert($table.append($tbody));
+        return this.insert($table.append($tbody));
     },
     createForm: function(horiz) {
-        this.insert($("<form>").toggleClass("form-horizontal", horiz).append(this.newLens()));
+        return this.insert($("<form>").toggleClass("form-horizontal", horiz).append(this.newLens()));
     },
     createFormGroup: function() {
-        this.insert($("<div>").addClass("form-group").append(this.newLens()));
+        return this.insert($("<div>").addClass("form-group").append(this.newLens()));
     },
     createFormLabel: function(label) {
-        this.insert($("<label>").text(label));
+        return this.insert($("<label>").text(label));
     },
     createFormInput: function(type, placeholder) {
-        this.insert($("<input>").attr("type", type).addClass("form-control").attr("placeholder", placeholder));
+        return this.insert($("<input>").attr("type", type).addClass("form-control").attr("placeholder", placeholder));
     },
     createFormDropdown: function(dropdown) {
-        this.insert($("<select>").addClass("form-control").append(dropdown.elements));
+        return this.insert($("<select>").addClass("form-control").append(dropdown.elements));
     },
     createFormButton: function(type, label, colour, size) {
-        this.insert($("<input>").attr("type", type).addClass("btn" + (size ? " btn-" + size : "") + " btn-" + colour).val(label));
+        return this.insert($("<input>").attr("type", type).addClass("btn" + (size ? " btn-" + size : "") + " btn-" + colour).val(label));
     }
 });
 BootPolish.Dropdown = function(native) {
@@ -142,12 +145,15 @@ BootPolish.Dropdown = function(native) {
 $.extend(BootPolish.Dropdown.prototype, {
     setDropup: function(up) {
         this.direction = (up ? "up" : "down");
+        return this;
     },
     addSeparator: function() {
         if (!this.native) this.elements.push($("<li>").addClass("divider").attr("role", "separator"));
+        return this;
     },
     addHeading: function(text) {
         if (!this.native) this.elements.push($("<li>").addClass("dropdown-header").text(text));
+        return this;
     },
     addOption: function(text, url) {
         if (this.native) {
@@ -155,5 +161,6 @@ $.extend(BootPolish.Dropdown.prototype, {
         } else {
             this.elements.push($("<li>").append($("<a>").attr("href", url).text(text)));
         }
+        return this;
     }
 });

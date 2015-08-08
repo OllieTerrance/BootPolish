@@ -29,18 +29,15 @@
 
 # JavaScript API
 
-All methods are exposed in the `BootPolish` class, which can be used to automate the creation of pages.
+All methods used by the keyboard bindings are exposed in the `BootPolish` class, which can be used to automate the creation of pages.
 
 ```js
 var bp = new BootPolish("#root-node");
-bp.createHeading("Block Heading", 1, true);
-// Lens focus moves under the new element.
-bp.createHeading("Subtitle", 2);
-bp.createParagraph("Some words.");
-bp.createAlert("info");
-// Lens focus is now inside the alert.
-bp.createParagraph("Some raw text.");
-bp.nav(1);
-// Lens focus is now below the alert.
-bp.createParagraph("Some more words.");
+bp.createHeading("Block Heading", 1, true) // focus moves under the element
+  .createHeading("Subtitle", 2)
+  .createParagraph("Some words.")
+  .createAlert("info") // focus is now inside the alert
+  .createParagraph("Some raw text.")
+  .nav(1) // focus is now below the alert
+  .createParagraph("Some more words.");
 ```
