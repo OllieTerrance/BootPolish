@@ -27,3 +27,26 @@
     border-left: 1px dashed #fb4;
     color: #fb4;
 }
+.bp-edit .btn-toolbar {
+    border: 1px dashed #88f;
+}
+.bp-edit .btn-toolbar::before {
+    float: right;
+    content: "Button Toolbar";
+    border-bottom: 1px dashed #88f;
+    border-left: 1px dashed #88f;
+    color: #88f;
+}
+.bp-edit .btn-group, .bp-edit .btn-group-vertical {
+    border: 1px dashed #6cf;
+}
+.bp-edit .btn-group::before, .bp-edit .btn-group-vertical::before {
+    float: right;
+    content: "Button Group";
+    border-bottom: 1px dashed #6cf;
+    border-left: 1px dashed #6cf;
+    color: #6cf;
+}
+.bp-edit .btn-group > .btn {
+    float: none;
+}

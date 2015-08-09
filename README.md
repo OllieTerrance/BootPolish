@@ -16,6 +16,8 @@
 * `w`: insert well
 * `l`: insert panel
 * `b`: buttons...
+  - `b t`: insert button toolbar
+  - `b g`: insert button group
   - `b b`: insert button
   - `b d`: insert button dropdown (`shift` for dropup)
 * `t`: insert table

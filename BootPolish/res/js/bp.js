@@ -84,6 +84,12 @@ $.extend(BootPolish.prototype, {
     createWell: function(size) {
         return this.insert($("<div>").addClass("well" + (size ? " well-" + size : "")).append(this.newLens()));
     },
+    createButtonToolbar: function() {
+        return this.insert($("<div>").addClass("btn-toolbar").attr("role", "toolbar").append(this.newLens()));
+    },
+    createButtonGroup: function(horiz) {
+        return this.insert($("<div>").addClass("btn-group" + (horiz ? "" : "-vertical")).attr("role", "group").append(this.newLens()));
+    },
     createButton: function(label, colour, size, dropdown) {
         if (dropdown) {
             var $menu = $("<ul>").addClass("dropdown-menu").append(dropdown.elements);

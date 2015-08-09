@@ -46,6 +46,10 @@ $(document).ready(function(e) {
         var colour = prompt("Panel colour (default/primary/success/info/warning/danger):", "default");
         if (["default", "primary", "success", "info", "warning", "danger"].indexOf(colour) === -1) return;
         bp.createPanel(title.substr(title[0] === "!" ? 1 : 0), title[0] === "!", footer, colour);
+    }).bind("b t", function(e, key) {
+        bp.createButtonToolbar();
+    }).bind("b g", function(e, key) {
+        bp.createButtonGroup(confirm("Horizontal?"));
     }).bind(["b b", "b d", "b shift+d"], function(e, key) {
         var label = prompt("Button label:", "");
         if (label === null) return;
